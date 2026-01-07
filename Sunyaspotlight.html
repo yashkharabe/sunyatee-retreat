@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunya Spotlight - The Sunyatee Retreat</title>
+    <meta name="description"
+        content="Explore transformation stories and community highlights from the Sunyatee Retreat. Celebrating global journey of mindfulness and stillness.">
+    <link rel="stylesheet" href="assets/stylesheet.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .spotlight-hero {
+            padding: 150px 5% 100px;
+            text-align: center;
+            background: linear-gradient(rgba(7, 7, 38, 0.8), rgba(7, 7, 38, 0.8)), url('assets/image/s3.jpeg');
+            background-size: cover;
+            background-position: center;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spotlight-hero h1 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #FFFFFF, #8B9EFF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .spotlight-hero p {
+            font-size: 1.6rem;
+            max-width: 900px;
+            color: #C9CCFF;
+            line-height: 1.6;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .spotlight-section {
+            padding: 100px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-header h2 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 3.5rem;
+            color: #FFFFFF;
+            margin-bottom: 20px;
+        }
+
+        .section-header div {
+            width: 100px;
+            height: 4px;
+            background: #8B9EFF;
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        /* Featured Story */
+        .featured-story {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            background: rgba(139, 158, 255, 0.05);
+            border: 1px solid rgba(139, 158, 255, 0.1);
+            border-radius: 40px;
+            padding: 60px;
+            margin-bottom: 100px;
+            align-items: center;
+        }
+
+        .featured-img-frame {
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(139, 158, 255, 0.2);
+        }
+
+        .featured-img-frame img {
+            width: 100%;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .featured-story:hover img {
+            transform: scale(1.05);
+        }
+
+        .featured-content h3 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 2.5rem;
+            color: #8B9EFF;
+            margin-bottom: 20px;
+        }
+
+        .featured-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #C9CCFF;
+            margin-bottom: 30px;
+        }
+
+        /* Success Stories Grid */
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+
+        .story-card {
+            background: rgba(139, 158, 255, 0.03);
+            border: 1px solid rgba(139, 158, 255, 0.1);
+            border-radius: 30px;
+            padding: 40px;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .story-card:hover {
+            transform: translateY(-10px);
+            background: rgba(139, 158, 255, 0.08);
+            border-color: rgba(139, 158, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .quote-icon {
+            font-size: 3rem;
+            color: rgba(139, 158, 255, 0.2);
+            line-height: 1;
+        }
+
+        .story-text {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #C9CCFF;
+            font-style: italic;
+        }
+
+        .story-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: auto;
+        }
+
+        .author-info h4 {
+            color: #FFFFFF;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .author-info span {
+            color: #8B9EFF;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Community Feed */
+        .community-feed {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feed-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            aspect-ratio: 1;
+        }
+
+        .feed-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .feed-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(7, 7, 38, 0.9), transparent);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 30px;
+            opacity: 0;
+            transition: all 0.4s ease;
+            transform: translateY(20px);
+        }
+
+        .feed-item:hover .feed-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feed-item:hover img {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        .feed-overlay h4 {
+            color: #FFFFFF;
+            margin-bottom: 10px;
+        }
+
+        .feed-overlay span {
+            color: #8B9EFF;
+            font-size: 0.85rem;
+        }
+
+        /* News Grid Styles */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .news-card {
+            background: rgba(139, 158, 255, 0.05);
+            border: 1px solid rgba(139, 158, 255, 0.1);
+            border-radius: 30px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-card:hover {
+            transform: translateY(-10px);
+            background: rgba(139, 158, 255, 0.08);
+            border-color: rgba(139, 158, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .news-img-wrapper {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .news-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .news-card:hover .news-img-wrapper img {
+            transform: scale(1.1);
+        }
+
+        .news-content {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-date {
+            color: #8B9EFF;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .news-card h3 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .news-card p {
+            color: #C9CCFF;
+            line-height: 1.6;
+            font-size: 1.05rem;
+            margin-bottom: 25px;
+        }
+
+        .read-more-btn {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: auto;
+            transition: all 0.3s ease;
+        }
+
+        .read-more-btn:hover {
+            color: #8B9EFF;
+            padding-left: 10px;
+        }
+
+        .load-more-container {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 80px;
+        }
+
+        .load-more-btn {
+            background: transparent;
+            border: 1px solid #8B9EFF;
+            color: #FFFFFF;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .load-more-btn:hover {
+            background: #8B9EFF;
+            color: #070726;
+            box-shadow: 0 0 20px rgba(139, 158, 255, 0.4);
+        }
+
+        @media (max-width: 1024px) {
+            .featured-story {
+                grid-template-columns: 1fr;
+                padding: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .spotlight-hero h1 {
+                font-size: 3rem;
+            }
+
+            .spotlight-hero p {
+                font-size: 1.2rem;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .community-feed {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .community-feed {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="main-header">
+        <div class="logo-container">
+            <img src="assets/image/logo.png" alt="The Sunyatee Retreat" class="site-logo">
+        </div>
+        <nav class="main-nav">
+            <ul class="nav-links">
+                <li class="dropdown">
+                    <a href="index.html">Home</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="mentors.html">Our Guide and Mentors</a></li>
+                    </ul>
+                </li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="Onlineclass.html">Online class</a></li>
+                <li><a href="Sunyaspotlight.html" class="active">Sunya spotlight</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            &#9776;
+        </div>
+    </header>
+
+    <main>
+        <section class="spotlight-hero">
+            <h1>Sunya Spotlight</h1>
+            <p>Celebrating the global community of practitioners and the transformative power of stillness. Discover
+                stories of inner awakening and community growth.</p>
+        </section>
+
+        <section class="spotlight-section">
+            <div class="section-header">
+                <h2>Featured Transformation</h2>
+                <div></div>
+            </div>
+
+            <div class="featured-story">
+                <div class="featured-img-frame">
+                    <img src="assets/image/s6.JPG" alt="Featured Story">
+                </div>
+                <div class="featured-content">
+                    <h3>The Power of Shared Silence</h3>
+                    <p>In our latest global retreat, practitioners from over 15 countries gathered to explore the depths
+                        of Sunya Vipasyana. This month, we highlight the incredible journey of our community in South
+                        India, where Sunya practice is transforming lives and fostering local empowerment.</p>
+                    <p>Through the Sunyatee International Foundation, we are not just teaching meditation; we are
+                        building a sanctuary for the soul, accessible to everyone, everywhere.</p>
+                    <a href="about-us.html" class="join-btn" style="width: auto; padding: 15px 40px;">Read Full
+                        Story</a>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h2>Latest News & Updates</h2>
+                <div></div>
+            </div>
+
+            <div class="news-grid">
+                <!-- News 1 -->
+                <article class="news-card">
+                    <div class="news-img-wrapper">
+                        <img src="assets/image/Happy-Womens-Day-2025-1-1.webp" alt="Women’s Day Medical Camp">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date">July 6, 2025</span>
+                        <h3>Women’s Day – Free Medical Checkup Camp</h3>
+                        <p>Sunyatee International Foundation organized a comprehensive free medical checkup camp for
+                            women, prioritizing community health and empowerment through accessible healthcare.</p>
+                        <a href="#" class="read-more-btn">Read Full Story ➜</a>
+                    </div>
+                </article>
+
+                <!-- News 2 -->
+                <article class="news-card">
+                    <div class="news-img-wrapper">
+                        <img src="assets/image/b-f1.avif" alt="18th Retreat Nagpur">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date">July 6, 2025</span>
+                        <h3>A Transformative Experience: The 18th Retreat in Nagpur</h3>
+                        <p>Our 18th residential retreat in Nagpur brought together seekers from all walks of life for
+                            deep immersion in Sunya Samatha Vipasyana practices under expert guidance.</p>
+                        <a href="#" class="read-more-btn">Read Full Story ➜</a>
+                    </div>
+                </article>
+
+                <!-- News 3 -->
+                <article class="news-card">
+                    <div class="news-img-wrapper">
+                        <img src="assets/image/1b.avif" alt="Sunya Prabhat New Year">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date">April 23, 2024</span>
+                        <h3>SUNYA PRABHAT: A New Year’s Journey to Mindfulness</h3>
+                        <p>Welcoming the new year with clarity and purpose. Sunya Prabhat offered a unique opportunity
+                            for participants to reset their intentions through meditative silence.</p>
+                        <a href="#" class="read-more-btn">Read Full Story ➜</a>
+                    </div>
+                </article>
+            </div>
+
+            <div class="load-more-container">
+                <button class="load-more-btn">Load More News</button>
+            </div>
+
+            <div class="section-header">
+                <h2>Voices of Awakening</h2>
+                <div></div>
+            </div>
+
+            <div class="stories-grid">
+                <!-- Story 1 -->
+                <div class="story-card">
+                    <div class="quote-icon">“</div>
+                    <p class="story-text">Before Sunya, my life was a constant noise of anxiety and deadlines. The
+                        28-day course completely shifted my perspective. I found a silence within that I never knew
+                        existed, and it changed how I lead my team and relate to my family.</p>
+                    <div class="story-author">
+                        <div class="author-info">
+                            <h4>Amit Sharma</h4>
+                            <span>Corporate Professional, Mumbai</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 2 -->
+                <div class="story-card">
+                    <div class="quote-icon">“</div>
+                    <p class="story-text">The simple technique of counting backwards in breath was a revelation. It
+                        didn't ask me to stop thinking; it taught me how to not be entangled in thought. My health has
+                        improved and my mind feels years younger.</p>
+                    <div class="story-author">
+                        <div class="author-info">
+                            <h4>Elena Rodriguez</h4>
+                            <span>Artist, Madrid</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 3 -->
+                <div class="story-card">
+                    <div class="quote-icon">“</div>
+                    <p class="story-text">As a student, concentration was my biggest challenge. The Sunya practices
+                        helped me achieve a state of relaxed awareness. I feel more centered and capable of handling
+                        academic pressure with ease.</p>
+                    <div class="story-author">
+                        <div class="author-info">
+                            <h4>Karan Verma</h4>
+                            <span>Post-Graduate Student, Delhi</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="spotlight-section" style="padding-top: 0;">
+            <div class="section-header">
+                <h2>Community Moments</h2>
+                <div></div>
+            </div>
+
+            <div class="community-feed">
+                <div class="feed-item">
+                    <img src="assets/image/s11.jpg" alt="Moment 1">
+                    <div class="feed-overlay">
+                        <h4>Group Meditation</h4>
+                        <span>Bengaluru Retreat</span>
+                    </div>
+                </div>
+                <div class="feed-item">
+                    <img src="assets/image/IMG_1640.JPG" alt="Moment 2">
+                    <div class="feed-overlay">
+                        <h4>Traditional Practice</h4>
+                        <span>Sutra Recitation</span>
+                    </div>
+                </div>
+                <div class="feed-item">
+                    <img src="assets/image/s8.JPG" alt="Moment 3">
+                    <div class="feed-overlay">
+                        <h4>Community Growth</h4>
+                        <span>Global Summit</span>
+                    </div>
+                </div>
+                <div class="feed-item">
+                    <img src="assets/image/IMG_1711.JPG" alt="Moment 4">
+                    <div class="feed-overlay">
+                        <h4>Inner Peace</h4>
+                        <span>Morning Session</span>
+                    </div>
+                </div>
+                <div class="feed-item">
+                    <img src="assets/image/s9.JPG" alt="Moment 5">
+                    <div class="feed-overlay">
+                        <h4>Nature Retreat</h4>
+                        <span>Himalayan Base</span>
+                    </div>
+                </div>
+                <div class="feed-item">
+                    <img src="assets/image/IMG_1607.JPG" alt="Moment 6">
+                    <div class="feed-overlay">
+                        <h4>Mentorship</h4>
+                        <span>Direct Guidance</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <p class="footer-address">201, Ram Residency, Near UCO Bank,<br>Manish Nagar<br>Nagpur – 440015</p>
+                <p class="footer-contact"><strong>Phone:</strong> <a href="tel:+919356474699">+91 9356474699</a></p>
+                <p class="footer-contact"><strong>Email:</strong> <a
+                        href="mailto:info@sunyatee.com">info@sunyatee.com</a></p>
+            </div>
+            <div class="footer-column">
+                <h3>About Us</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="mentors.html">Our Guide and Mentors</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="Onlineclass.html">Online class</a></li>
+                    <li><a href="Sunyaspotlight.html">Sunya spotlight</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Retreats</h3>
+                <ul class="footer-links">
+                    <li><a href="services.html#corporate">Corporate Sunyaa Retreat</a></li>
+                    <li><a href="services.html#1day">1-Day Retreat</a></li>
+                    <li><a href="services.html#3day">3-Day Retreat</a></li>
+                    <li><a href="services.html#7day">7-Day Retreat</a></li>
+                    <li><a href="services.html#studio">Studio Retreat</a></li>
+                    <li><a href="Onlineclass.html">Online Meditation</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sunyatee International Foundation. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/script.js"></script>
+</body>
+
+</html>

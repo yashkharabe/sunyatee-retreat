@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - The Sunyatee Retreat</title>
+    <link rel="stylesheet" href="assets/stylesheet.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .book-wrapper {
+            perspective: 2000px;
+            padding: 50px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .book-navigation {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            z-index: 10;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            background: rgba(139, 158, 255, 0.1);
+            border: 1px solid rgba(139, 158, 255, 0.4);
+            color: #FFFFFF;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Roxborough CF', serif;
+            font-size: 1.1rem;
+        }
+
+        .nav-btn:hover,
+        .nav-btn.active {
+            background: #8B9EFF;
+            color: #070726;
+            box-shadow: 0 0 20px rgba(139, 158, 255, 0.4);
+        }
+
+        .book-container {
+            width: 100%;
+            max-width: 1300px;
+            position: relative;
+            transform-style: preserve-3d;
+            margin-bottom: 50px;
+            /* Added background stack effect */
+            background: rgba(139, 158, 255, 0.02);
+            border-radius: 30px;
+            box-shadow:
+                5px 5px 0 rgba(139, 158, 255, 0.1),
+                10px 10px 0 rgba(139, 158, 255, 0.05);
+        }
+
+        .event-page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to right, #0d0d35 0%, #0a0a2e 3%, #0a0a2e 100%);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(139, 158, 255, 0.2);
+            border-right: 5px double rgba(139, 158, 255, 0.3);
+            /* Page edge effect */
+            border-radius: 5px 30px 30px 5px;
+            /* Square spine, rounded outer edge */
+            padding: 80px;
+            display: none;
+            opacity: 0;
+            transform: rotateY(90deg);
+            transform-origin: left;
+            transition: all 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+            box-shadow:
+                -15px 10px 30px rgba(0, 0, 0, 0.6),
+                3px 0 0 rgba(255, 255, 255, 0.05),
+                6px 0 0 rgba(255, 255, 255, 0.02);
+        }
+
+        .event-page::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 40px;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .event-page.active {
+            display: block;
+            opacity: 1;
+            transform: rotateY(0deg);
+            position: relative;
+            z-index: 5;
+            height: auto;
+            min-height: min-content;
+        }
+
+        .event-page h2 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 4.5rem;
+            color: #FFFFFF;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .page-tagline {
+            text-align: center;
+            font-style: italic;
+            color: #8B9EFF;
+            margin-bottom: 80px;
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+        }
+
+        .section-block {
+            margin-bottom: 100px;
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 80px;
+            align-items: center;
+            /* Centering image and text for 'midel line' look */
+            margin-bottom: 100px;
+        }
+
+        .event-grid.reverse {
+            grid-template-columns: 1.5fr 1fr;
+        }
+
+        .event-grid.reverse .event-image-container {
+            order: 2;
+        }
+
+        .event-image-container img {
+            width: 100%;
+            height: auto;
+            max-height: 600px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 2px solid rgba(139, 158, 255, 0.4);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            transition: transform 0.5s ease;
+        }
+
+        .event-image-container img:hover {
+            transform: scale(1.02);
+            border-color: #8B9EFF;
+        }
+
+        .sticky-image {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+        }
+
+        .event-details h4 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 2.8rem;
+            color: #8B9EFF;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        .event-details p {
+            line-height: 1.9;
+            color: #C9CCFF;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        /* Features Styling */
+        .features-container {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 60px;
+            border-radius: 30px;
+            margin-bottom: 80px;
+            border: 1px solid rgba(139, 158, 255, 0.1);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: rgba(10, 10, 46, 0.5);
+            padding: 35px;
+            border-radius: 20px;
+            border: 1px solid rgba(139, 158, 255, 0.15);
+            transition: all 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: #8B9EFF;
+            background: rgba(139, 158, 255, 0.05);
+        }
+
+        .feature-card h5 {
+            font-family: 'Roxborough CF', serif;
+            color: #FFFFFF;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            color: #8B9EFF;
+        }
+
+        .feature-card p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #9A9ECC;
+        }
+
+        .feature-img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 5px rgba(139, 158, 255, 0.5));
+        }
+
+        /* Belt Spectrum Gallery */
+        .belt-gallery {
+            margin-top: 100px;
+            text-align: center;
+        }
+
+        .belt-gallery h3 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 3.5rem;
+            color: #FFFFFF;
+            margin-bottom: 50px;
+        }
+
+        .belt-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .belt-card {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(139, 158, 255, 0.2);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .belt-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .belt-img-wrapper {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+        }
+
+        .belt-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .belt-info {
+            padding: 25px;
+        }
+
+        .belt-info h6 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .belt-red h6 {
+            color: #ff4d4d;
+        }
+
+        .belt-orange h6 {
+            color: #ffa500;
+        }
+
+        .belt-yellow h6 {
+            color: #ffff00;
+        }
+
+        .belt-green h6 {
+            color: #4caf50;
+        }
+
+        .belt-blue h6 {
+            color: #2196f3;
+        }
+
+        .belt-info p {
+            font-size: 0.9rem;
+            color: #9A9ECC;
+            font-style: italic;
+        }
+
+        .retreat-info-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(139, 158, 255, 0.1);
+        }
+
+        .retreat-info-section h5 {
+            font-family: 'Roxborough CF', serif;
+            color: #8B9EFF;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .info-list li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            color: #C9CCFF;
+            font-size: 1.1rem;
+        }
+
+        .info-list li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: #8B9EFF;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .schedule-item strong {
+            display: block;
+            color: #FFFFFF;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .schedule-item p {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #9A9ECC;
+            margin: 0;
+        }
+
+        .booking-cta {
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(139, 158, 255, 0.1);
+            border: 1px dashed #8B9EFF;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .booking-cta p {
+            font-size: 1.4rem;
+            color: #FFFFFF;
+            margin: 0;
+        }
+
+        .belt-summary {
+            max-width: 1000px;
+            margin: 0 auto;
+            font-size: 1.3rem;
+            line-height: 2;
+            color: #C9CCFF;
+            text-align: center;
+        }
+
+        .final-welcome-block {
+            margin-top: 120px;
+            padding: 80px;
+            background: rgba(139, 158, 255, 0.05);
+            border-radius: 40px;
+            text-align: center;
+            border: 1px solid rgba(139, 158, 255, 0.1);
+        }
+
+        .final-welcome-block p {
+            font-size: 1.4rem;
+            line-height: 2.2;
+            color: #FFFFFF;
+            max-width: 1100px;
+            margin: 0 auto 40px;
+            font-style: italic;
+        }
+
+        @media (max-width: 1100px) {
+
+            .event-grid,
+            .event-grid.reverse {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .event-page {
+                padding: 60px 30px;
+                transform: rotateY(45deg);
+                /* Less extreme rotation for mobile stability */
+            }
+
+            .event-page h2 {
+                font-size: 3rem;
+            }
+
+            .event-details h4 {
+                font-size: 2.2rem;
+            }
+
+            .book-wrapper {
+                perspective: 1500px;
+                padding: 30px 10px;
+            }
+
+            .page-tagline {
+                font-size: 1.2rem;
+                margin-bottom: 40px;
+            }
+
+            .event-page h2 {
+                font-size: 2.5rem;
+            }
+
+            .features-grid {
+                gap: 20px;
+            }
+
+            .features-container {
+                padding: 30px 15px;
+            }
+
+            .belt-gallery h3 {
+                font-size: 2.5rem;
+            }
+
+            .final-welcome-block {
+                padding: 40px 20px;
+            }
+
+            .final-welcome-block p {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .event-page {
+                padding: 40px 20px;
+                border-radius: 5px 20px 20px 5px;
+                border-right: 4px double rgba(139, 158, 255, 0.3);
+                /* On very small screens, 3D transforms can be jittery, we simplify */
+                transform: translateY(20px);
+                transition: all 0.6s ease-out;
+                background: linear-gradient(to right, #0d0d35 0%, #0a0a2e 5%, #0a0a2e 100%);
+            }
+
+            .event-page.active {
+                transform: translateY(0);
+            }
+
+            .book-container {
+                margin-bottom: 30px;
+            }
+
+            .event-grid {
+                gap: 30px;
+                margin-bottom: 60px;
+            }
+
+            .event-details h4 {
+                font-size: 1.8rem;
+                margin-bottom: 20px;
+            }
+
+            .event-details p {
+                font-size: 1.1rem;
+                line-height: 1.7;
+                text-align: left;
+                /* Better for narrow mobile screens to prevent overflow */
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                margin-bottom: 20px;
+            }
+
+            .event-details h4 {
+                font-size: 1.8rem;
+                margin-bottom: 20px;
+                word-wrap: break-word;
+            }
+
+            .nav-btn {
+                padding: 10px 18px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="main-header">
+        <div class="logo-container">
+            <img src="assets/image/logo.png" alt="The Sunyatee Retreat" class="site-logo">
+        </div>
+        <nav class="main-nav">
+            <ul class="nav-links">
+                <li class="dropdown">
+                    <a href="index.html">Home</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="mentors.html">Our Guide and Mentors</a></li>
+                    </ul>
+                </li>
+                <li><a href="events.html" class="active">Events</a></li>
+                <li><a href="Onlineclass.html">Online class</a></li>
+                <li><a href="Sunyaspotlight.html">Sunya spotlight</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            &#9776;
+        </div>
+    </header>
+
+    <main class="page-content">
+        <section class="page-hero">
+            <h1>The Journey of Sunya</h1>
+            <p>Flipping the pages to your inner sanctuary</p>
+        </section>
+
+        <section class="book-wrapper">
+            <div class="book-navigation">
+                <button class="nav-btn active" onclick="showPage(1)">Corporate Retreat</button>
+                <button class="nav-btn" onclick="showPage(2)">1-Day Retreat</button>
+                <button class="nav-btn" onclick="showPage(3)">3-Day Retreat</button>
+                <button class="nav-btn" onclick="showPage(4)">7-Day Retreat</button>
+                <button class="nav-btn" onclick="showPage(5)">Studio Retreat</button>
+            </div>
+
+            <div class="book-container">
+                <!-- Page 1: Corporate Sunyaa Retreat -->
+                <div id="page1" class="event-page active">
+                    <h2>The Corporate Sunyaa Retreat</h2>
+                    <p class="page-tagline">Transformation for the Visionary Organization</p>
+
+                    <!-- Customizable Section -->
+                    <div class="event-grid">
+                        <div class="event-image-container">
+                            <img src="assets/image/customizable.jpg" alt="Customizable Retreats">
+                        </div>
+                        <div class="event-details">
+                            <h4>Customizable Retreats Designed for Your Organization</h4>
+                            <p>Every company is unique—and so are our retreats. We design fully customizable corporate
+                                experiences aligned with your organization’s vision, values, and goals. From immersive
+                                team-building activities to thought-provoking leadership workshops, each program is
+                                crafted to spark collaboration, boost productivity, and ignite a renewed sense of
+                                purpose. Your team will return not just recharged, but deeply aligned with your mission.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Leadership Section -->
+                    <div class="event-grid reverse">
+                        <div class="event-image-container">
+                            <img src="assets/image/leadership.jpg" alt="Leadership Excellence">
+                        </div>
+                        <div class="event-details">
+                            <h4>Leadership Excellence Through Mindfulness</h4>
+                            <p>Strong leaders shape strong organizations. Our Leadership & Mindfulness Training blends
+                                proven leadership strategies with the transformative power of Sunya Meditation. Your
+                                leaders will learn to lead with clarity, focus, and emotional intelligence—making better
+                                decisions, inspiring teams, and creating lasting impact. The result? A work culture
+                                rooted in vision, empathy, and resilience.</p>
+                        </div>
+                    </div>
+
+                    <!-- Stress-Free Section -->
+                    <div class="event-grid">
+                        <div class="event-image-container">
+                            <img src="assets/image/stress-manage.jpg" alt="Stress Free Teams">
+                        </div>
+                        <div class="event-details">
+                            <h4>Stress-Free, High-Performing Teams</h4>
+                            <p>Workplace stress silently drains productivity and morale. Our Stress Management &
+                                Employee Wellness Programs empower teams to break free from burnout and cultivate
+                                balance. Through guided meditation, wellness activities, and expert-led sessions,
+                                employees learn to manage pressure, restore mental clarity, and maintain energy—both at
+                                work and in life.</p>
+                        </div>
+                    </div>
+
+                    <!-- Team Building Section -->
+                    <div class="event-grid reverse">
+                        <div class="event-image-container">
+                            <img src="assets/image/testimonials.jpg" alt="Team Building">
+                        </div>
+                        <div class="event-details">
+                            <h4>Team-Building with a Deeper Purpose</h4>
+                            <p>Forget ordinary team-building. At SIF, we fuse mindfulness with purposeful group
+                                activities to create Team-Building Through Meditation. Teams learn to listen, trust, and
+                                collaborate in ways that go beyond the boardroom. The calm, focused environment of
+                                Sunya Meditation strengthens communication, deepens connections, and supercharges
+                                collective productivity.</p>
+                        </div>
+                    </div>
+
+                    <!-- Success & Studio Section -->
+                    <div class="event-grid">
+                        <div class="event-image-container">
+                            <img src="assets/image/studio-retreat.jpg" alt="Exclusive Studio">
+                        </div>
+                        <div class="event-details">
+                            <h4>Corporate Success Stories & Exclusive Studios</h4>
+                            <p>We measure success by transformation. Our retreats have helped companies across
+                                industries foster stronger leadership, improve teamwork, and boost overall well-being.
+                                Real testimonials from past participants share how these programs have reshaped their
+                                work culture—and inspired sustainable growth.</p>
+                            <p>For leaders and decision-makers seeking an intimate, high-impact experience, our Special
+                                Studio Retreats provide a private setting for deep reflection, strategic thinking, and
+                                personal growth. Perfect for aligning vision, values, and leadership energy at the
+                                highest levels of your organization.</p>
+                        </div>
+                    </div>
+
+                    <!-- Features Grid -->
+                    <div class="features-container">
+                        <div class="event-details" style="text-align: center; margin-bottom: 60px;">
+                            <h4>Retreat Features & Transformative Benefits</h4>
+                        </div>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <img src="assets/image/the-digital-detox.avif" alt="Digital Detox" class="feature-img">
+                                <h5>The Digital Detox</h5>
+                                <p>Unplug and Reconnect - Escape the constant digital noise and reconnect with your
+                                    inner self in a sacred, silent environment.</p>
+                            </div>
+                            <div class="feature-card">
+                                <img src="assets/image/stress-free-weekend.avif" alt="Stress Free" class="feature-img">
+                                <h5>Stress-Free Getaway</h5>
+                                <p>Relax, Reflect, and Recharge - Leave your worries behind and immerse yourself in a
+                                    peaceful meditation retreat that restores your spirit.</p>
+                            </div>
+                            <div class="feature-card">
+                                <img src="assets/image/unlock-your-full-potential.avif" alt="Unlock Potential"
+                                    class="feature-img">
+                                <h5>Unlock Full Potential</h5>
+                                <p>Enhance Creativity & Productivity - Designed for those seeking deep personal growth
+                                    and a radical transformation of their professional life.</p>
+                            </div>
+                            <div class="feature-card">
+                                <img src="assets/image/mind-body.avif" alt="Holistic Renewal" class="feature-img">
+                                <h5>Holistic Renewal</h5>
+                                <p>Mind, Body, and Conscience - Rejuvenate your entire being through the ancient science
+                                    of Vipasyana and unique physical exercises.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rejuvenating Takeaways -->
+
+                    <div class="event-details">
+                        <h4>Transformative and Rejuvenating Takeaways</h4>
+                        <h5>Heal, Grow, and Transform</h5>
+                        <p>Your Journey Starts Here - Begin your transformative journey to a better, more balanced
+                            you through our meditation retreat. Unlock your full potential, enhance your creativity,
+                            and rejuvenate your entire being through sacred practices that have stood the test of
+                            time.</p>
+                    </div>
+                    <div class="belt-gallery">
+                        <h3>The Wisdom Spectrum</h3>
+                        <div class="belt-cards">
+                            <!-- 1-Red -->
+                            <div class="belt-card belt-red">
+                                <div class="belt-img-wrapper">
+                                    <img src="assets/image/red-belt.png" alt="Red Belt">
+                                </div>
+                                <div class="belt-info">
+                                    <h6>1-Red Belt</h6>
+                                    <p>The Gateway to Self-Awareness</p>
+                                </div>
+                            </div>
+                            <!-- 2-Orange -->
+                            <div class="belt-card belt-orange">
+                                <div class="belt-img-wrapper">
+                                    <img src="assets/image/orange-belt.png" alt="Orange Belt">
+                                </div>
+                                <div class="belt-info">
+                                    <h6>2-Orange Belt</h6>
+                                    <p>Enhancing Focus & Attention</p>
+                                </div>
+                            </div>
+                            <!-- 3-Yellow -->
+                            <div class="belt-card belt-yellow">
+                                <div class="belt-img-wrapper">
+                                    <img src="assets/image/yellow-belt.png" alt="Yellow Belt">
+                                </div>
+                                <div class="belt-info">
+                                    <h6>3-Yellow Belt</h6>
+                                    <p>Cultivating Deep Concentration</p>
+                                </div>
+                            </div>
+                            <!-- 4-Green -->
+                            <div class="belt-card belt-green">
+                                <div class="belt-img-wrapper">
+                                    <img src="assets/image/green-belt.png" alt="Green Belt">
+                                </div>
+                                <div class="belt-info">
+                                    <h6>4-Green Belt</h6>
+                                    <p>Developing Clarity & Insight</p>
+                                </div>
+                            </div>
+                            <!-- 5-Blue -->
+                            <div class="belt-card belt-blue">
+                                <div class="belt-img-wrapper">
+                                    <img src="assets/image/blue-belt.png" alt="Blue Belt">
+                                </div>
+                                <div class="belt-info">
+                                    <h6>5-Blue Belt</h6>
+                                    <p>Empowering Creativity & Action</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="belt-summary">
+                            <p>As we progress through the spectrum, we traverse through shades of Red, orange, yellow,
+                                green, and blue, delving deeper into the subtleties of the mind and emotions. Each stage
+                                builds upon the preceding one, offering a comprehensive framework for personal growth
+                                and insight.</p>
+                        </div>
+                    </div>
+
+                    <!-- Final Welcome -->
+                    <div class="final-welcome-block">
+                        <p>In a world that moves at a relentless pace, finding moments of stillness and clarity can
+                            feel like an elusive dream. However, nestled amidst the tranquil landscapes lies a haven
+                            where individuals embark on a transformative journey toward inner peace and
+                            self-discovery.</p>
+                        <p>Welcome to the Sunyatee Retreat, a sanctuary where the ancient practices of Sunya Samatha
+                            Vipasyana are imparted with simplicity and efficacy, guiding participants through a profound
+                            exploration of the mind.</p>
+                    </div>
+                </div>
+
+                <!-- Page 2: 1-Day Retreat -->
+                <div id="page2" class="event-page">
+                    <h2>1-Day Retreat</h2>
+                    <p class="page-tagline">A Day of Mental Rejuvenation</p>
+                    <div class="event-grid">
+                        <div class="event-image-container">
+                            <img src="assets/image/s7.png" alt="1-Day Retreat">
+                        </div>
+                        <div class="event-details">
+                            <h4>The Quick Reset</h4>
+                            <p>Our 1-Day Retreat is an oasis for the busy individual. It serves as a rapid intervention
+                                to break the cycle of constant digital noise and physical exhaustion. In just eight
+                                hours, you will learn the foundational Sunya practices that bring immediate calm.</p>
+
+                            <div class="retreat-info-section">
+                                <h5>Who Is This Retreat For?</h5>
+                                <p>Perfect for busy professionals, individuals new to meditation, or anyone seeking a
+                                    quick yet profound reset. If stress, overthinking, or burnout weigh you down, this
+                                    retreat offers a powerful way to regain balance in just one day.</p>
+                            </div>
+
+                            <div class="retreat-info-section">
+                                <h5>What to Expect?</h5>
+                                <ul class="info-list">
+                                    <li><strong>Guided Sunya Samatha Vipasyana Meditation</strong> – Experience deep
+                                        stillness and clarity</li>
+                                    <li><strong>Tai Chi & Breathwork</strong> – Gentle movements to align mind and body
+                                    </li>
+                                    <li><strong>Mindfulness Talks & Self-Reflection</strong> – Learn practical tools for
+                                        stress management</li>
+                                    <li><strong>Digital Detox & Silent Reflection</strong> – Disconnect from
+                                        distractions and reconnect with yourself</li>
+                                    <li><strong>Nutritious Vegetarian Meals</strong> – Nourish your body with wholesome
+                                        food</li>
+                                </ul>
+                            </div>
+
+                            <div class="retreat-info-section">
+                                <h5>Schedule</h5>
+                                <div class="schedule-grid">
+                                    <div class="schedule-item">
+                                        <strong>Morning:</strong>
+                                        <p>Arrival, welcome tea, guided meditation & breathing exercises</p>
+                                    </div>
+                                    <div class="schedule-item">
+                                        <strong>Midday:</strong>
+                                        <p>Mindful eating practice, self-reflection & journaling</p>
+                                    </div>
+                                    <div class="schedule-item">
+                                        <strong>Afternoon:</strong>
+                                        <p>Silent contemplation, Tai Chi session & stress-relief techniques</p>
+                                    </div>
+                                    <div class="schedule-item">
+                                        <strong>Evening:</strong>
+                                        <p>Closing meditation & takeaway mindfulness practices</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="retreat-info-section">
+                                <h5>Benefits You’ll Gain</h5>
+                                <ul class="info-list">
+                                    <li>Release stress and tension instantly</li>
+                                    <li>Enhance mental clarity and focus</li>
+                                    <li>Learn meditation techniques for everyday use</li>
+                                    <li>Experience deep relaxation in a peaceful setting</li>
+                                    <li>Return home refreshed, recharged, and more mindful</li>
+                                </ul>
+                            </div>
+
+                            <div class="booking-cta">
+                                <p><strong>Limited Spots Available! Secure Your Place Today!</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 3: 3-Day Retreat -->
+                <div id="page3" class="event-page">
+                    <h2>3-Day Retreat</h2>
+                    <p class="page-tagline">Deepening the Stillness</p>
+                    <div class="event-grid">
+                        <div class="event-image-container">
+                            <img src="assets/image/upcoming3.png" alt="3-Day Retreat">
+                        </div>
+                        <div class="event-details">
+                            <h4>The Weekend Voyage</h4>
+                            <p>The 3-Day Retreat is a deep dive into the philosophy and practice of Sunya Samatha
+                                Vipasyana. Spanning from Friday evening to Sunday afternoon, this immersive experience
+                                allows the nervous system to truly settle and release long-held tensions.</p>
+
+                            <div class="retreat-info-section">
+                                <h5>Who Is This Retreat For?</h5>
+                                <p>This retreat is designed for busy professionals, wellness seekers, and individuals
+                                    looking for a short yet powerful break to reset their minds and bodies. Whether
+                                    you’re new to meditation or looking to deepen your practice, this experience is for
+                                    you.</p>
+                            </div>
+
+                            <div class="retreat-info-section">
+                                <h5>What to Expect?</h5>
+                                <ul class="info-list">
+                                    <li><strong>Guided Sunya Samatha Vipasyana</strong> – meditation sessions</li>
+                                    <li><strong>Tai Chi exercises</strong> – for body-mind harmony</li>
+                                    <li><strong>Silent reflection</strong> – periods for inner clarity</li>
+                                    <li><strong>Mindfulness workshops</strong> – on stress relief & emotional balance
+                                    </li>
+                                    <li><strong>Nutritious vegetarian meals</strong> – for holistic well-being</li>
+                                    <li><strong>Nature walks & digital detox</strong> – for complete rejuvenation</li>
+                                </ul>
+                            </div>
+
+                            <div class="retreat-info-section">
+                                <h5>Schedule</h5>
+                                <div class="schedule-grid">
+                                    <div class="schedule-item">
+                                        <strong>Morning:</strong>
+                                        <p>Sunrise meditation, Tai Chi movement, and mindful breakfast</p>
+                                    </div>
+                                    <div class="schedule-item">
+                                        <strong>Afternoon:</strong>
+                                        <p>Insightful talks, self-reflection exercises, and interactive sessions</p>
+                                    </div>
+                                    <div class="schedule-item">
+                                        <strong>Evening:</strong>
+                                        <p>Guided meditation, relaxation practices, and group sharing</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="retreat-info-section">
+                                <h5>Retreat Venue & Stay</h5>
+                                <p>Enjoy a peaceful stay in our serene retreat center, nestled in nature. Comfortable
+                                    accommodations, nourishing meals, and a supportive community create the perfect
+                                    space for your transformation.</p>
+                            </div>
+
+                            <div class="retreat-info-section">
+                                <h5>Benefits You’ll Gain</h5>
+                                <ul class="info-list">
+                                    <li>Reduce stress and anxiety</li>
+                                    <li>Gain mental clarity and emotional balance</li>
+                                    <li>Improve focus and productivity</li>
+                                    <li>Experience deep relaxation and better sleep</li>
+                                    <li>Reconnect with your inner self</li>
+                                </ul>
+                            </div>
+
+                            <div class="booking-cta">
+                                <p><strong>Limited Spots Available! Secure Your Place Today!</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 4: 7-Day Retreat -->
+                <div id="page4" class="event-page">
+                    <h2>7-Day Retreat</h2>
+                    <p class="page-tagline">The Ultimate Transformation</p>
+                    <div class="event-grid">
+                        <div class="event-image-container">
+                            <img src="assets/image/upcoming4.png" alt="7-Day Retreat">
+                        </div>
+                        <div class="event-details">
+                            <h4>The Soul Rebirth</h4>
+                            <p>This is our most comprehensive spiritual program. The 7-Day Retreat is designed for those
+                                ready for a life-altering shift. Under the direct inspiration of our Mentors, this week
+                                focuses on complete detoxification of the body and profound purification of the mind.
+                            </p>
+
+                            <div class="retreat-info-section">
+                                <h5>Who Is This Retreat For?</h5>
+                                <p>This retreat is designed for individuals seeking a deeper level of self-discovery,
+                                    mental clarity, and emotional balance. Whether you’re an experienced meditator, a
+                                    professional looking for a reset, or someone on a spiritual journey, this immersive
+                                    experience will help you detach from distractions and reconnect with your inner
+                                    self.</p>
+                            </div>
+
+                            <div class="retreat-info-section">
+                                <h5>What You Will Experience</h5>
+                                <ul class="info-list">
+                                    <li><strong>Extended Noble Silence</strong> – Disconnect from external noise to
+                                        experience profound inner stillness.</li>
+                                    <li><strong>Guided Sunya Samatha Vipasyana Meditation</strong> – Learn and practice
+                                        ancient techniques for mindfulness and insight.</li>
+                                    <li><strong>Mindful Living Practices</strong> – Engage in mindful walking, eating,
+                                        and conscious breathing to cultivate awareness.</li>
+                                    <li><strong>One-on-One Guidance</strong> – Receive personalized mentoring from
+                                        experienced meditation teachers.</li>
+                                    <li><strong>Nature & Solitude</strong> – Stay in a serene retreat space, away from
+                                        distractions, allowing deep introspection.</li>
+                                    <li><strong>Detox for the Mind & Body</strong> – Enjoy wholesome, sattvic meals and
+                                        a technology-free environment.</li>
+                                </ul>
+                            </div>
+
+                            <div class="retreat-info-section">
+                                <h5>Key Benefits</h5>
+                                <ul class="info-list">
+                                    <li><strong>Mental Clarity</strong> – Reduce stress, enhance focus, and develop a
+                                        balanced mindset.</li>
+                                    <li><strong>Emotional Healing</strong> – Release past burdens, cultivate
+                                        self-awareness, and find inner peace.</li>
+                                    <li><strong>Spiritual Growth</strong> – Experience deep silence to connect with your
+                                        higher self.</li>
+                                    <li><strong>Renewed Energy & Purpose</strong> – Return to daily life with a
+                                        refreshed perspective and a sense of renewal.</li>
+                                </ul>
+                            </div>
+
+                            <div class="retreat-info-section">
+                                <h5>Retreat Details</h5>
+                                <div class="schedule-grid">
+                                    <div class="schedule-item">
+                                        <strong>Duration:</strong>
+                                        <p>7-10 Days</p>
+                                    </div>
+                                    <div class="schedule-item">
+                                        <strong>Location:</strong>
+                                        <p>Peaceful, nature-surrounded retreat center</p>
+                                    </div>
+                                    <div class="schedule-item">
+                                        <strong>Food:</strong>
+                                        <p>Sattvic, vegetarian meals for holistic well-being</p>
+                                    </div>
+                                    <div class="schedule-item">
+                                        <strong>Digital Detox:</strong>
+                                        <p>Encouraged for full immersion</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="retreat-info-section">
+                                <h5>Ready for a Life-Changing Experience?</h5>
+                                <p>If you’re seeking a break from the noise of daily life and a transformative journey
+                                    inward, this retreat is for you.</p>
+                            </div>
+
+                            <div class="booking-cta">
+                                <p><strong>Limited Spots Available! Secure Your Place Today!</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 5: Studio Retreat -->
+                <div id="page5" class="event-page">
+                    <h2>Studio Retreat</h2>
+                    <p class="page-tagline">Inner Peace in the Heart of the City</p>
+                    <div class="event-grid">
+                        <div class="event-image-container">
+                            <img src="assets/image/upcoming5.png" alt="Studio Retreat">
+                        </div>
+                        <div class="event-details">
+                            <h4>An Immersive Mindfulness Experience in a Serene Space</h4>
+                            <p>A Serene Retreat Experience for Inner Growth & Healing. The Studio Retreat brings the
+                                wisdom of Sunyatee into your daily neighborhood. These are intimate, shorter sessions
+                                held in our boutique studios, providing a consistent anchor for your spiritual practice
+                                amidst urban chaos.</p>
+
+                            <div class="retreat-info-section">
+                                <h5>Who Is This Retreat For?</h5>
+                                <p>Ideal for individuals seeking a more structured yet intimate approach to meditation
+                                    and self-awareness. Perfect for beginners, professionals, and spiritual seekers who
+                                    prefer a cozy, focused environment over large retreat settings.</p>
+                            </div>
+
+                            <div class="retreat-info-section">
+                                <h5>What to Expect?</h5>
+                                <ul class="info-list">
+                                    <li><strong>Sunya Samatha Vipasyana Meditation</strong> – Guided sessions for inner
+                                        clarity and awareness.</li>
+                                    <li><strong>Tai Chi & Breathwork</strong> – Gentle movements to enhance mindfulness
+                                        and energy flow.</li>
+                                    <li><strong>Personalized Attention</strong> – Small group setting for a customized
+                                        experience.</li>
+                                    <li><strong>Self-Reflection & Journaling</strong> – Gain deeper insights into your
+                                        thoughts and emotions.</li>
+                                    <li><strong>Comfortable, Peaceful Atmosphere</strong> – A carefully curated space to
+                                        foster tranquility.</li>
+                                </ul>
+                            </div>
+
+                            <div class="retreat-info-section">
+                                <h5>Schedule</h5>
+                                <div class="schedule-grid">
+                                    <div class="schedule-item">
+                                        <strong>Morning:</strong>
+                                        <p>Welcome tea, breath awareness meditation, and mindful movement.</p>
+                                    </div>
+                                    <div class="schedule-item">
+                                        <strong>Midday:</strong>
+                                        <p>Silent reflection, Tai Chi session, and guided self-inquiry.</p>
+                                    </div>
+                                    <div class="schedule-item">
+                                        <strong>Afternoon:</strong>
+                                        <p>Insight meditation, group discussion, and take-home mindfulness practices.
+                                        </p>
+                                    </div>
+                                    <div class="schedule-item">
+                                        <strong>Evening:</strong>
+                                        <p>Closing meditation and Q&A with mentors.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="retreat-info-section">
+                                <h5>Retreat Venue & Stay</h5>
+                                <p>Our Studio Retreat offers a serene and thoughtfully designed space for immersive
+                                    mindfulness experiences. Nestled in a peaceful setting, the venue provides a perfect
+                                    balance of comfort and tranquility, allowing you to disconnect from distractions and
+                                    reconnect with your inner self.</p>
+                                <ul class="info-list" style="margin-top: 15px;">
+                                    <li><strong>Comfortable Stay</strong> – Enjoy a cozy and minimalistic environment
+                                        designed to support deep meditation and self-reflection.</li>
+                                    <li><strong>Peaceful Atmosphere</strong> – Experience a quiet, intimate setting that
+                                        enhances mindfulness, free from external noise and disturbances.</li>
+                                    <li><strong>Nourishing Meals</strong> – Savor simple, wholesome meals that support
+                                        your meditation practice and overall well-being.</li>
+                                    <li><strong>Mindful Surroundings</strong> – Designed to create a space for calmness,
+                                        our retreat fosters stillness, balance, and deep relaxation.</li>
+                                </ul>
+                                <p style="margin-top: 15px; font-style: italic;">Every element of the Studio Retreat is
+                                    curated to guide you toward inner clarity, self-awareness, and rejuvenation.</p>
+                            </div>
+
+                            <div class="retreat-info-section">
+                                <h5>Benefits You’ll Gain</h5>
+                                <ul class="info-list">
+                                    <li>A structured yet intimate meditation experience</li>
+                                    <li>Deeper self-awareness and emotional balance</li>
+                                    <li>Practical mindfulness tools for daily life</li>
+                                    <li>Small-group setting for personalized guidance</li>
+                                    <li>A quiet sanctuary for peace and rejuvenation</li>
+                                </ul>
+                            </div>
+
+                            <div class="booking-cta">
+                                <p><strong>Limited Spots Available! Secure Your Place Today!</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <p class="footer-address">201, Ram Residency, Near UCO Bank,<br>Manish Nagar<br>Nagpur – 440015</p>
+                <p class="footer-contact"><strong>Phone:</strong> <a href="tel:+919356474699">+91 9356474699</a></p>
+                <p class="footer-contact"><strong>Email:</strong> <a
+                        href="mailto:info@sunyatee.com">info@sunyatee.com</a></p>
+            </div>
+            <div class="footer-column">
+                <h3>Footer Navigation</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="mentors.html">Our Guide and Mentors</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="Onlineclass.html">Online class</a></li>
+                    <li><a href="Sunyaspotlight.html">Sunya spotlight</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sunyatee International Foundation. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/script.js"></script>
+    <script>
+        function showPage(pageNumber) {
+            const pages = document.querySelectorAll('.event-page');
+            pages.forEach(p => {
+                p.classList.remove('active');
+                p.style.display = 'none';
+            });
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            const activePage = document.getElementById('page' + pageNumber);
+            activePage.style.display = 'block';
+            setTimeout(() => { activePage.classList.add('active'); }, 50);
+            buttons[pageNumber - 1].classList.add('active');
+        }
+    </script>
+</body>
+
+</html>

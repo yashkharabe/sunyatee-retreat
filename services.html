@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - The Sunyatee Retreat</title>
+    <meta name="description"
+        content="Explore the diverse range of wellness and meditative services offered by Sunyatee International Foundation, from corporate retreats to personalized healing.">
+    <link rel="stylesheet" href="assets/stylesheet.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .services-hero {
+            padding: 150px 5% 100px;
+            text-align: center;
+            background: linear-gradient(rgba(7, 7, 38, 0.75), rgba(7, 7, 38, 0.75)), url('assets/image/s2.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .services-hero h1 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #FFFFFF, #8B9EFF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .services-hero p {
+            font-size: 1.6rem;
+            max-width: 900px;
+            color: #C9CCFF;
+            line-height: 1.6;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .services-section {
+            padding: 100px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title h2 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 3.5rem;
+            color: #FFFFFF;
+            margin-bottom: 20px;
+        }
+
+        .section-title div {
+            width: 100px;
+            height: 4px;
+            background: #8B9EFF;
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+
+        .service-card {
+            background: rgba(139, 158, 255, 0.05);
+            border: 1px solid rgba(139, 158, 255, 0.1);
+            border-radius: 40px;
+            padding: 50px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            background: rgba(139, 158, 255, 0.08);
+            border-color: rgba(139, 158, 255, 0.3);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 30px;
+            object-fit: contain;
+        }
+
+        .service-card h3 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 2.2rem;
+            color: #8B9EFF;
+            margin-bottom: 20px;
+        }
+
+        .service-card p {
+            color: #C9CCFF;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .service-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 40px 0;
+        }
+
+        .service-features li {
+            padding: 10px 0;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid rgba(139, 158, 255, 0.1);
+        }
+
+        .service-features li::before {
+            content: '✦';
+            color: #8B9EFF;
+        }
+
+        .card-btn {
+            margin-top: auto;
+            display: inline-block;
+            background: transparent;
+            border: 1px solid #8B9EFF;
+            color: #FFFFFF;
+            padding: 15px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .card-btn:hover {
+            background: #8B9EFF;
+            color: #070726;
+            box-shadow: 0 0 20px rgba(139, 158, 255, 0.4);
+        }
+
+        /* Detailed Highlights */
+        .highlight-banner {
+            background: linear-gradient(rgba(10, 10, 46, 0.9), rgba(10, 10, 46, 0.9)), url('assets/image/mid-medi-e1751733102949.avif');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 5%;
+            border-radius: 60px;
+            margin: 50px 5% 100px;
+            text-align: center;
+            border: 1px solid rgba(139, 158, 255, 0.1);
+        }
+
+        .highlight-banner h2 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+        }
+
+        .highlight-banner p {
+            font-size: 1.3rem;
+            color: #C9CCFF;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .services-hero h1 {
+                font-size: 3rem;
+            }
+
+            .services-hero p {
+                font-size: 1.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2.5rem;
+            }
+
+            .service-card {
+                padding: 40px 25px;
+            }
+
+            .highlight-banner h2 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="main-header">
+        <div class="logo-container">
+            <img src="assets/image/logo.png" alt="The Sunyatee Retreat" class="site-logo">
+        </div>
+        <nav class="main-nav">
+            <ul class="nav-links">
+                <li class="dropdown">
+                    <a href="index.html">Home</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="mentors.html">Our Guide and Mentors</a></li>
+                    </ul>
+                </li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="Onlineclass.html">Online class</a></li>
+                <li><a href="Sunyaspotlight.html">Sunya spotlight</a></li>
+                <li><a href="services.html" class="active">Services</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            &#9776;
+        </div>
+    </header>
+
+    <main>
+        <section class="services-hero">
+            <h1>Our Holistic Services</h1>
+            <p>Empowering your journey to inner peace through curated wellness programs, ancient meditative practices,
+                and global retreat experiences.</p>
+        </section>
+
+        <section id="retreats" class="services-section">
+            <div class="section-title">
+                <h2>Signature Retreats</h2>
+                <div></div>
+            </div>
+
+            <div class="services-grid">
+                <!-- Corporate Retreat -->
+                <article class="service-card" id="corporate">
+                    <img src="assets/image/leadership.jpg" alt="Corporate" class="service-icon"
+                        style="border-radius: 50%;">
+                    <h3>Corporate Sunyaa</h3>
+                    <p>Designed for visionary organizations seeking to foster leadership, productivity, and emotional
+                        intelligence through mindfulness.</p>
+                    <ul class="service-features">
+                        <li>Customizable Teambuilding</li>
+                        <li>Leadership Excellence Workshops</li>
+                        <li>Stress Management Programs</li>
+                    </ul>
+                    <a href="events.html" class="card-btn">Learn More</a>
+                </article>
+
+                <!-- Residential Retreats -->
+                <article class="service-card" id="residential">
+                    <img src="assets/image/s9.JPG" alt="Residential" class="service-icon" style="border-radius: 50%;">
+                    <h3>Residential Retreats</h3>
+                    <p>Deep immersion programs ranging from 1 to 7 days, providing a sanctuary for profound inner
+                        dialogue and renewal.</p>
+                    <ul class="service-features">
+                        <li>1-Day Mental Rejuvenation</li>
+                        <li>3-Day Intensive Practice</li>
+                        <li>7-Day Gateway to Stillness</li>
+                    </ul>
+                    <a href="events.html" class="card-btn">View Schedule</a>
+                </article>
+
+                <!-- Studio Retreat -->
+                <article class="service-card" id="studio">
+                    <img src="assets/image/studio-retreat.jpg" alt="Studio" class="service-icon"
+                        style="border-radius: 50%;">
+                    <h3>Studio Retreats</h3>
+                    <p>Intimate, high-impact sessions in private city-based studios for those with limited time but
+                        seeking deep transformation.</p>
+                    <ul class="service-features">
+                        <li>Private Mentorship</li>
+                        <li>Advanced Technique Training</li>
+                        <li>Focus & Concentration Sessions</li>
+                    </ul>
+                    <a href="events.html" class="card-btn">Explore Studio</a>
+                </article>
+            </div>
+        </section>
+
+        <section class="highlight-banner">
+            <h2>Experience The Sunya Difference</h2>
+            <p>Our approach transcends conventional meditation. We offer a holistic lifestyle integration including
+                nutrition, ancient sutra practices, and specialized physical exercises.</p>
+            <a href="Onlineclass.html" class="join-btn" style="width: auto; padding: 15px 50px;">Join Online Course</a>
+        </section>
+
+        <section id="healing" class="services-section" style="padding-top: 0;">
+            <div class="section-title">
+                <h2>Wellness & Healing</h2>
+                <div></div>
+            </div>
+
+            <div class="services-grid">
+                <!-- Physical Renewal -->
+                <article class="service-card">
+                    <img src="assets/image/mind-body.avif" alt="Physical" class="service-icon"
+                        style="border-radius: 50%;">
+                    <h3>Physical Renewal</h3>
+                    <p>Techniques to align the body and release stored tension through gentle movements and breathwork.
+                    </p>
+                    <ul class="service-features">
+                        <li>Sunya Physical Exercises</li>
+                        <li>Tai Chi & Qigong Basics</li>
+                        <li>Breath Awareness Training</li>
+                    </ul>
+                    <a href="contact.html" class="card-btn">Enquire Now</a>
+                </article>
+
+                <!-- Digital Detox -->
+                <article class="service-card">
+                    <img src="assets/image/Digital-Detox.png" alt="Detox" class="service-icon"
+                        style="border-radius: 50%;">
+                    <h3>Digital Detox</h3>
+                    <p>Programs designed to help you unplug from technology and recalibrate your biological clock.</p>
+                    <ul class="service-features">
+                        <li>Electronic-Free Zones</li>
+                        <li>Silent Comtemplation</li>
+                        <li>Mental De-cluttering</li>
+                    </ul>
+                    <a href="contact.html" class="card-btn">Enquire Now</a>
+                </article>
+
+                <!-- Personal Mentorship -->
+                <article class="service-card">
+                    <img src="assets/image/meditating.png" alt="Mentorship" class="service-icon"
+                        style="border-radius: 50%;">
+                    <h3>Personal Coaching</h3>
+                    <p>One-on-one sessions with certified guides to navigate your specific life challenges using Sunya
+                        wisdom.</p>
+                    <ul class="service-features">
+                        <li>Private Consultations</li>
+                        <li>Custom Practice Plans</li>
+                        <li>Spiritual Guidance</li>
+                    </ul>
+                    <a href="mentors.html" class="card-btn">Meet Mentors</a>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <p class="footer-address">201, Ram Residency, Near UCO Bank,<br>Manish Nagar<br>Nagpur – 440015</p>
+                <p class="footer-contact"><strong>Phone:</strong> <a href="tel:+919356474699">+91 9356474699</a></p>
+                <p class="footer-contact"><strong>Email:</strong> <a
+                        href="mailto:info@sunyatee.com">info@sunyatee.com</a></p>
+            </div>
+            <div class="footer-column">
+                <h3>About Us</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="mentors.html">Our Guide and Mentors</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="Onlineclass.html">Online class</a></li>
+                    <li><a href="Sunyaspotlight.html">Sunya spotlight</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Retreats</h3>
+                <ul class="footer-links">
+                    <li><a href="services.html#corporate">Corporate Sunyaa Retreat</a></li>
+                    <li><a href="services.html#residential">1-Day Retreat</a></li>
+                    <li><a href="services.html#residential">3-Day Retreat</a></li>
+                    <li><a href="services.html#residential">7-Day Retreat</a></li>
+                    <li><a href="services.html#studio">Studio Retreat</a></li>
+                    <li><a href="Onlineclass.html">Online Meditation</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sunyatee International Foundation. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/script.js"></script>
+</body>
+
+</html>

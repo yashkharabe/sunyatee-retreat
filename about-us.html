@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - The Sunyatee Retreat</title>
+    <meta name="description"
+        content="Learn about Sunyatee Retreat, our vision, mission, and dedication to inner transformation through Sunya Samatha Vipasyana meditation.">
+    <link rel="stylesheet" href="assets/stylesheet.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .about-hero {
+            padding: 150px 5% 100px;
+            text-align: center;
+            background: linear-gradient(rgba(7, 7, 38, 0.75), rgba(7, 7, 38, 0.75)), url('assets/image/s1 (2).jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .about-hero h1 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #FFFFFF, #8B9EFF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .about-hero p {
+            font-size: 1.6rem;
+            max-width: 900px;
+            color: #C9CCFF;
+            line-height: 1.6;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .about-section {
+            padding: 100px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-bottom: 100px;
+        }
+
+        .intro-content h2 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 3.5rem;
+            color: #FFFFFF;
+            margin-bottom: 30px;
+        }
+
+        .intro-content p {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: #C9CCFF;
+            margin-bottom: 25px;
+        }
+
+        .about-image-frame {
+            position: relative;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(139, 158, 255, 0.2);
+        }
+
+        .about-image-frame img {
+            width: 100%;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .about-image-frame:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Vision & Mission Card Layout */
+        .vision-mission-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .vm-card {
+            background: rgba(139, 158, 255, 0.05);
+            border: 1px solid rgba(139, 158, 255, 0.1);
+            border-radius: 40px;
+            padding: 60px;
+            transition: all 0.4s ease;
+        }
+
+        .vm-card:hover {
+            background: rgba(139, 158, 255, 0.08);
+            border-color: rgba(139, 158, 255, 0.3);
+            transform: translateY(-10px);
+        }
+
+        .vm-card h2 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 3rem;
+            color: #8B9EFF;
+            margin-bottom: 30px;
+        }
+
+        .vm-card p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: #C9CCFF;
+        }
+
+        /* Initiatives Section */
+        .initiatives-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .initiatives-header h2 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 3.5rem;
+            color: #FFFFFF;
+        }
+
+        .initiatives-header .line {
+            width: 80px;
+            height: 4px;
+            background: #8B9EFF;
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        .initiatives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        .initiative-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(139, 158, 255, 0.1);
+            padding: 40px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .initiative-item:hover {
+            background: rgba(139, 158, 255, 0.05);
+            border-color: #8B9EFF;
+        }
+
+        .initiative-item h3 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 2rem;
+            color: #FFFFFF;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .initiative-item h3::before {
+            content: '✦';
+            color: #8B9EFF;
+            font-size: 1.5rem;
+        }
+
+        .initiative-item p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #C9CCFF;
+        }
+
+        /* Founders Section */
+        .founders-section {
+            background: rgba(139, 158, 255, 0.03);
+            border-radius: 60px;
+            padding: 100px 5%;
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .founders-grid {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            margin-top: 60px;
+        }
+
+        .founder-card {
+            max-width: 400px;
+            background: rgba(7, 7, 38, 0.5);
+            padding: 40px;
+            border-radius: 40px;
+            border: 1px solid rgba(139, 158, 255, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .founder-card:hover {
+            border-color: #8B9EFF;
+            transform: scale(1.02);
+        }
+
+        .founder-img {
+            width: 100%;
+            height: auto;
+            max-height: 450px;
+            border-radius: 15px;
+            object-fit: contain;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(139, 158, 255, 0.4);
+            margin-bottom: 25px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s ease;
+        }
+
+        .founder-card:hover .founder-img {
+            transform: translateY(-5px);
+            border-color: #8B9EFF;
+            background: rgba(139, 158, 255, 0.05);
+        }
+
+        .founder-card h4 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            margin-bottom: 10px;
+        }
+
+        .founder-card h5 {
+            color: #8B9EFF;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        /* Final Highlight Banner */
+        .highlight-banner {
+            background: linear-gradient(rgba(10, 10, 46, 0.9), rgba(10, 10, 46, 0.9)), url('assets/image/mid-medi-e1751733102949.avif');
+            background-size: cover;
+            background-position: center;
+            padding: 120px 5%;
+            border-radius: 60px;
+            margin: 50px 5% 100px;
+            text-align: center;
+            border: 1px solid rgba(139, 158, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-banner h2 {
+            font-family: 'Roxborough CF', serif;
+            font-size: 4rem;
+            margin-bottom: 25px;
+            color: #FFFFFF;
+        }
+
+        .highlight-banner p {
+            font-size: 1.4rem;
+            color: #C9CCFF;
+            max-width: 850px;
+            margin: 0 auto 50px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 1024px) {
+
+            .intro-grid,
+            .vision-mission-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .highlight-banner h2 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .initiatives-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .vm-card {
+                padding: 40px 25px;
+            }
+
+            .founder-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="main-header">
+        <div class="logo-container">
+            <img src="assets/image/logo.png" alt="The Sunyatee Retreat" class="site-logo">
+        </div>
+        <nav class="main-nav">
+            <ul class="nav-links">
+                <li class="dropdown">
+                    <a href="index.html">Home</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="mentors.html">Our Guide and Mentors</a></li>
+                    </ul>
+                </li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="Onlineclass.html">Online class</a></li>
+                <li><a href="Sunyaspotlight.html">Sunya spotlight</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="about-us.html" class="active">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            &#9776;
+        </div>
+    </header>
+
+    <main>
+        <section class="about-hero">
+            <h1>Sanctuary of Transformation</h1>
+            <p>Reviving ancient wisdom to navigate the modern world with grace, clarity, and inner peace.</p>
+        </section>
+
+        <section class="about-section">
+            <div class="intro-grid">
+                <div class="intro-content">
+                    <h2>Sunyatee Retreat</h2>
+                    <p>At Sunyatee Retreat, we offer a transformative space for individuals to experience inner
+                        stillness, clarity, and self-mastery through the profound practice of Sunya Samatha Vipasyana.
+                    </p>
+                    <p>Rooted in ancient meditative traditions and adapted for modern life, our retreats provide a
+                        structured approach to mindfulness, self-awareness, and holistic well-being.</p>
+                    <p>Whether you seek stress relief, enhanced focus, emotional healing, or spiritual awakening,
+                        Sunyatee Retreat offers a peaceful sanctuary to reconnect with your true self.</p>
+                </div>
+                <div class="about-image-frame">
+                    <img src="assets/image/s2.jpeg" alt="Meditation Session">
+                </div>
+            </div>
+
+            <div class="vision-mission-grid">
+                <div class="vm-card">
+                    <h2>Our Vision</h2>
+                    <p>We envision a world where individuals experience profound inner peace and clarity through the
+                        practice of Sunya Samatha Vipasyana. Rooted in ancient wisdom and guided by the philosophy of
+                        Sunya, our retreats empower individuals to cultivate mindfulness, balance, and harmony in their
+                        personal and professional lives. We aspire to nurture peace ambassadors who contribute to a more
+                        awakened and compassionate society.</p>
+                </div>
+                <div class="vm-card">
+                    <h2>Our Mission</h2>
+                    <p>To provide immersive residential and non-residential Sunya Samatha Vipasyana retreats that guide
+                        practitioners from self-awareness to true liberation. We aim to bridge ancient wisdom with
+                        modern living, making spiritual wisdom accessible and relevant through structured meditation,
+                        storytelling, and interactive learning.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="founders-section">
+            <div class="initiatives-header">
+                <h2>Our Spiritual Guidance</h2>
+                <div class="line"></div>
+            </div>
+            <div class="founders-grid">
+                <div class="founder-card">
+                    <img src="assets/image/lim-cropped.gif" alt="Datuk Dr. Lim Siow Jin" class="founder-img">
+                    <h5>Dhyanacharya Nagajiva</h5>
+                    <h4>Datuk Dr. Lim Siow Jin</h4>
+                    <p style="color: #C9CCFF;">Founder – Sunyatee International Foundation. Dedicated to reviving
+                        ancient wisdom for peace and personal transformation.</p>
+                </div>
+                <div class="founder-card">
+                    <img src="assets/image/savera-cropped.gif" alt="Dr. Rajesh Savera" class="founder-img">
+                    <h5>Sunya Pravartak</h5>
+                    <h4>Dr. Rajesh Savera</h4>
+                    <p style="color: #C9CCFF;">Director – Sunyatee International Foundation. A visionary teacher guiding
+                        seekers toward emotional and spiritual awakening.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-section" style="padding-top: 0;">
+            <div class="initiatives-header">
+                <h2>Our Impact Initiatives</h2>
+                <div class="line"></div>
+            </div>
+
+            <div class="initiatives-grid">
+                <article class="initiative-item">
+                    <h3>Inner Transformation</h3>
+                    <p>We offer immersive retreats that guide practitioners through the seven levels of Sunya practice,
+                        enabling them to progress from self-awareness to true liberation through structured meditation
+                        and wisdom.</p>
+                </article>
+
+                <article class="initiative-item">
+                    <h3>Training Peace Ambassadors</h3>
+                    <p>Through the Sunyadoota Program, we train dedicated individuals to become guides and trainers.
+                        These peace ambassadors help spread the practice across universities, corporate spaces, and
+                        community settings.</p>
+                </article>
+
+                <article class="initiative-item">
+                    <h3>Corporate Wellness</h3>
+                    <p>Customized programs to address stress, anxiety, and lack of focus in professional environments,
+                        empowering individuals to navigate challenges with mindfulness and strategic clarity.</p>
+                </article>
+
+                <article class="initiative-item">
+                    <h3>Community Empowerment</h3>
+                    <p>Extending the transformative benefits of Sunya practice to women entrepreneurs, self-help groups,
+                        and rural communities, fostering self-reliance and collective growth.</p>
+                </article>
+
+                <article class="initiative-item">
+                    <h3>Retreat Centre Vision</h3>
+                    <p>Establishing a permanent Sunya Retreat Centre as a hub for deep meditation, training, and
+                        research in Sunya philosophy and holistic well-being.</p>
+                </article>
+
+                <article class="initiative-item">
+                    <h3>Global Digital Reach</h3>
+                    <p>Utilizing structured online courses and AI-powered coaching to expand the reach of Sunya practice
+                        globally, making it accessible to seekers from all backgrounds.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="highlight-banner">
+            <div style="position: relative; z-index: 2;">
+                <h2>Bridging Wisdom with Modern Life</h2>
+                <p>Our programs integrate the timeless teachings of the Buddha-Dhamma and the Diamond Sutra into daily
+                    life, making spiritual growth achievable in today's fast-paced world.</p>
+                <a href="Onlineclass.html" class="join-btn"
+                    style="width: auto; padding: 18px 60px; font-size: 1.2rem;">Explore Our Courses</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <p class="footer-address">201, Ram Residency, Near UCO Bank,<br>Manish Nagar<br>Nagpur – 440015</p>
+                <p class="footer-contact"><strong>Phone:</strong> <a href="tel:+919356474699">+91 9356474699</a></p>
+                <p class="footer-contact"><strong>Email:</strong> <a
+                        href="mailto:info@sunyatee.com">info@sunyatee.com</a></p>
+            </div>
+            <div class="footer-column">
+                <h3>About Us</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="mentors.html">Our Guide and Mentors</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="Onlineclass.html">Online class</a></li>
+                    <li><a href="Sunyaspotlight.html">Sunya spotlight</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Retreats</h3>
+                <ul class="footer-links">
+                    <li><a href="services.html#corporate">Corporate Sunyaa Retreat</a></li>
+                    <li><a href="services.html#residential">1-Day Retreat</a></li>
+                    <li><a href="services.html#3day">3-Day Retreat</a></li>
+                    <li><a href="services.html#7day">7-Day Retreat</a></li>
+                    <li><a href="services.html#studio">Studio Retreat</a></li>
+                    <li><a href="Onlineclass.html">Online Meditation</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sunyatee International Foundation. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/script.js"></script>
+</body>
+
+</html>
